@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>정기태 ♥ 김수연 결혼합니다</title>
+
+  <meta property="og:title" content="정기태 ♥ 김수연 결혼합니다" />
+  <meta property="og:description" content="2026년 7월 25일 토요일 오후 2시 30분, SW컨벤션센터 11층" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Pretendard:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #f7f4ef; color: #2f2b28; font-family: 'Pretendard', sans-serif; line-height: 1.7; }
+    .container { max-width: 480px; margin: 0 auto; background: white; min-height: 100vh; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.08); }
+
+    /* RSVP 모달 */
+    .rsvp-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+    .rsvp-modal.show { opacity: 1; pointer-events: auto; }
+    .rsvp-card { background: white; border-radius: 24px; padding: 36px 28px; max-width: 380px; width: 100%; text-align: center; transform: translateY(20px); transition: transform 0.4s; }
+    .rsvp-modal.show .rsvp-card { transform: translateY(0); }
+    .rsvp-title { font-family: 'Noto Serif KR', serif; font-size: 22px; margin-bottom: 14px; color: #2f2b28; }
+    .rsvp-desc { font-size: 14px; color: #6f665f; margin-bottom: 26px; line-height: 1.6; }
+    .rsvp-btn-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .rsvp-btn { padding: 14px; border-radius: 999px; font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; border: 0; font-family: inherit; }
+    .rsvp-btn-primary { background: #2f2b28; color: white; }
+    .rsvp-btn-secondary { background: white; color: #5a534d; border: 1px solid #ddd4cb; }
+
+    /* 음악 버튼 */
+    .music-btn { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(47,43,40,0.85); backdrop-filter: blur(10px); border: 0; color: white; cursor: pointer; font-size: 18px; z-index: 150; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; }
+    .music-btn .icon-pause { display: none; }
+    .music-btn.playing .icon-play { display: none; }
+    .music-btn.playing .icon-pause { display: inline; }
+
+    /* 히어로 */
+    .hero { position: relative; height: 680px; background: linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18)), url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop') center/cover; display: flex; align-items: flex-end; justify-content: center; padding: 60px 30px; text-align: center; color: white; }
+    .hero-content { backdrop-filter: blur(4px); }
+    .date { font-size: 14px; letter-spacing: 3px; opacity: 0.9; margin-bottom: 18px; }
+    .title { font-family: 'Noto Serif KR', serif; font-size: 42px; font-weight: 500; line-height: 1.4; margin-bottom: 18px; }
+    .subtitle { font-size: 15px; opacity: 0.92; }
+
+    section { padding: 70px 28px; text-align: center; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: 28px; margin-bottom: 30px; font-weight: 500; color: #433d38; }
+    .message { font-size: 15px; color: #5a534d; white-space: pre-line; }
+    .divider { width: 50px; height: 1px; background: #cfc6bd; margin: 28px auto; }
+
+    .couple { background: #faf7f2; }
+    .person-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+    .names { font-family: 'Noto Serif KR', serif; font-size: 26px; color: #342f2b; }
+    .role-badge { font-size: 12px; color: #8d8278; background: #fff; border: 1px solid #e6ddd4; border-radius: 999px; padding: 3px 10px; }
+    .family { font-size: 14px; color: #766d65; margin-bottom: 6px; }
+    .call-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 16px; background: #fff; border: 1px solid #ddd4cb; border-radius: 999px; color: #433d38; text-decoration: none; font-size: 13px; font-weight: 500; }
+
+    .schedule-box { border: 1px solid #e6ddd4; border-radius: 20px; padding: 28px 20px; background: #fff; margin-top: 18px; }
+    .schedule-main { font-size: 22px; font-family: 'Noto Serif KR', serif; margin-bottom: 10px; color: #3d3732; }
+    .schedule-sub { color: #726a63; font-size: 15px; }
+
+    /* 갤러리 */
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 24px; }
+    .gallery-item { aspect-ratio: 1 / 1.2; overflow: hidden; border-radius: 14px; background: #f0e8df; cursor: pointer; position: relative; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .gallery-item:active img { transform: scale(1.05); }
+    .gallery-placeholder { display: flex; align-items: center; justify-content: center; height: 100%; color: #b5aba1; font-size: 12px; text-align: center; padding: 10px; }
+
+    /* 라이트박스 */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 300; padding: 20px; }
+    .lightbox.show { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; }
+    .lightbox-close { position: absolute; top: 20px; right: 20px; background: none; border: 0; color: white; font-size: 28px; cursor: pointer; }
+
+    /* Location */
+    .location-card { background: #faf7f2; border-radius: 24px; padding: 30px 24px; margin-top: 24px; }
+    .hall { font-size: 22px; font-family: 'Noto Serif KR', serif; margin-bottom: 10px; }
+    .address { font-size: 14px; color: #6f665f; margin-bottom: 22px; }
+    .map-embed { width: 100%; height: 280px; border: 0; border-radius: 18px; margin-bottom: 18px; background: #eee; }
+    .btn-wrap { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 16px; border-radius: 999px; text-decoration: none; font-size: 13px; font-weight: 500; }
+    .btn-dark { background: #2f2b28; color: white; }
+    .btn-light { background: white; color: #2f2b28; border: 1px solid #ddd4cb; }
+    .transport-info { text-align: left; margin-top: 26px; padding: 22px; background: #fff; border-radius: 18px; font-size: 13.5px; color: #5a534d; }
+    .transport-info h4 { font-size: 14px; color: #433d38; margin-bottom: 8px; font-weight: 600; }
+    .transport-info p { margin-bottom: 14px; line-height: 1.65; }
+    .transport-info p:last-child { margin-bottom: 0; }
+
+    .rsvp-section { background: #faf7f2; }
+    .rsvp-cta-btn { display: inline-block; margin-top: 16px; padding: 14px 32px; background: #2f2b28; color: white; border-radius: 999px; text-decoration: none; font-size: 14px; font-weight: 500; }
+
+    /* 계좌 */
+    .account-box { border: 1px solid #ece4dc; border-radius: 18px; margin-top: 14px; text-align: left; background: #fff; overflow: hidden; }
+    .account-toggle { width: 100%; padding: 18px 20px; background: #fff; border: 0; font-size: 15px; font-weight: 600; color: #443f3a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; }
+    .account-toggle::after { content: '+'; font-size: 20px; color: #a8a098; transition: transform 0.2s; }
+    .account-toggle.open::after { transform: rotate(45deg); }
+    .account-list { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .account-list.open { max-height: 600px; }
+    .account-item { padding: 14px 20px; border-top: 1px solid #f0e8df; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .account-info { flex: 1; }
+    .account-name { font-size: 14px; color: #443f3a; margin-bottom: 4px; font-weight: 500; }
+    .account-num { font-size: 13px; color: #786f68; }
+    .copy-btn { padding: 7px 13px; background: #f4ede4; border: 0; border-radius: 999px; font-size: 12px; color: #5a534d; cursor: pointer; font-family: inherit; white-space: nowrap; }
+
+    footer { padding: 50px 20px 70px; text-align: center; font-size: 13px; color: #8b837b; background: #faf7f2; }
+
+    .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: #2f2b28; color: white; padding: 10px 20px; border-radius: 999px; font-size: 13px; opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 100; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 480px) { .hero { height: 600px; } .title { font-size: 34px; } }
+  </style>
+</head>
+<body>
+
+  <!-- RSVP 모달 -->
+  <div class="rsvp-modal" id="rsvpModal">
+    <div class="rsvp-card">
+      <div class="rsvp-title">참석해 주시나요?</div>
+      <div class="rsvp-desc">
+        원활한 결혼식 준비를 위해<br />
+        참석 여부를 알려주시면 감사하겠습니다.
+      </div>
+      <div class="rsvp-btn-wrap">
+        <a href="YOUR_GOOGLE_FORM_URL" target="_blank" class="rsvp-btn rsvp-btn-primary" onclick="closeRsvp()">
+          참석 여부 응답하기
+        </a>
+        <button class="rsvp-btn rsvp-btn-secondary" onclick="closeRsvp()">
+          나중에 할게요
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 배경음악 -->
+  <audio id="bgm" loop>
+    <source src="music/bgm.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+    <span class="icon-play">♪</span>
+    <span class="icon-pause">||</span>
+  </button>
+
+  <div class="container">
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="date">2026 · 07 · 25 · SAT</div>
+        <div class="title">기태<br />&<br />수연</div>
+        <div class="subtitle">저희 두 사람이 하나의 길을 걸어가려 합니다.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Invitation</div>
+      <div class="message">서로의 계절이 되어
+같은 방향을 바라보며 살아가겠습니다.
+
+소중한 분들을 모시고
+기쁜 날의 시작을 함께하고자 합니다.
+
+따뜻한 마음으로 축복해 주시면
+큰 기쁨으로 간직하겠습니다.</div>
+    </section>
+
+    <section class="couple">
+      <div class="section-title">신랑 · 신부</div>
+      <div class="family">정해승 · 문명숙의 장남</div>
+      <div class="person-row">
+        <span class="names">정기태</span>
+        <span class="role-badge">신랑</span>
+      </div>
+      <a href="tel:01000000000" class="call-btn">📞 신랑에게 연락하기</a>
+
+      <div class="divider"></div>
+
+      <div class="family">김민범 · (故)백금옥의 차녀</div>
+      <div class="person-row">
+        <span class="names">김수연</span>
+        <span class="role-badge">신부</span>
+      </div>
+      <a href="tel:01000000000" class="call-btn">📞 신부에게 연락하기</a>
+    </section>
+
+    <section>
+      <div class="section-title">Wedding Day</div>
+      <div class="schedule-box">
+        <div class="schedule-main">2026년 7월 25일 토요일</div>
+        <div class="schedule-sub">오후 2시 30분<br />SW컨벤션센터 11층</div>
+      </div>
+    </section>
+
+    <!-- 갤러리 -->
+    <section>
+      <div class="section-title">Gallery</div>
+      <div class="message" style="font-size:13px;color:#8d8278;margin-bottom:10px;">
+        준비 중입니다 💛
+      </div>
+
+      <div class="gallery" id="gallery">
+        <div class="gallery-item" data-img="images/gallery1.jpg">
+          <div class="gallery-placeholder">사진 추가 예정<br />gallery1.jpg</div>
+        </div>
+        <div class="gallery-item" data-img="images/gallery2.jpg">
+          <div class="gallery-placeholder">사진 추가 예정<br />gallery2.jpg</div>
+        </div>
+        <div class="gallery-item" data-img="images/gallery3.jpg">
+          <div class="gallery-placeholder">사진 추가 예정<br />gallery3.jpg</div>
+        </div>
+        <div class="gallery-item" data-img="images/gallery4.jpg">
+          <div class="gallery-placeholder">사진 추가 예정<br />gallery4.jpg</div>
+        </div>
+        <div class="gallery-item" data-img="images/gallery5.jpg">
+          <div class="gallery-placeholder">사진 추가 예정<br />gallery5.jpg</div>
+        </div>
+        <div class="gallery-item" data-img="images/gallery6.jpg">
+          <div class="gallery-placeholder">사진 추가 예정<br />gallery6.jpg</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP 섹션 -->
+    <section class="rsvp-section">
+      <div class="section-title">참석 여부 전달</div>
+      <div class="message" style="font-size:14px;">
+        축하의 마음으로 참석해주실<br />
+        모든 분들을 정성껏 모시고자 합니다.
+      </div>
+      <a href="YOUR_GOOGLE_FORM_URL" target="_blank" class="rsvp-cta-btn">
+        참석 여부 응답하기 →
+      </a>
+    </section>
+
+    <section>
+      <div class="section-title">Location</div>
+
+      <div class="location-card">
+        <div class="hall">SW컨벤션센터</div>
+        <div class="address">
+          서울 종로구 지봉로 19, 11층<br />
+          <a href="tel:0236735000" style="color:#5a534d;text-decoration:underline;">02-3673-5000</a>
+        </div>
+
+        <iframe
+          class="map-embed"
+          src="https://map.naver.com/p/entry/place/11540622?c=15.00,0,0,0,dh&placePath=/home"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="SW컨벤션센터 지도">
+        </iframe>
+
+        <div class="btn-wrap">
+          <a href="https://naver.me/GzE9CXtD" target="_blank" class="btn btn-dark">네이버지도</a>
+          <a href="https://map.kakao.com/?q=SW컨벤션센터" target="_blank" class="btn btn-light">카카오맵</a>
+          <a href="https://tmap.life/" target="_blank" class="btn btn-light">T맵</a>
+        </div>
+
+        <div class="transport-info">
+          <h4>🚇 지하철</h4>
+          <p>
+            1·6호선 <b>동묘앞역</b> 6번 출구<br />
+            4호선 <b>동대문역</b> 4번 출구 (도보 5분)
+          </p>
+          <h4>🚌 버스</h4>
+          <p>
+            <b>동묘앞역 / 동대문역</b> 하차<br />
+            간선: 142, 101, 111, 103, 105, 144, 152, 201, 260, 261, 2262, 270, 271, 370, 420, 720, 721<br />
+            지선: 1014, 2230, 2112, 2233<br />
+            광역: 9301, 9403
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">마음 전하실 곳</div>
+      <div class="message" style="font-size:14px;margin-bottom:10px;">
+        참석이 어려우신 분들을 위해<br />계좌번호를 안내드립니다.
+      </div>
+
+      <div class="account-box">
+        <button class="account-toggle" onclick="toggleAccount(this)">신랑측 계좌번호</button>
+        <div class="account-list">
+          <div class="account-item">
+            <div class="account-info">
+              <div class="account-name">정기태 <span style="color:#a8a098;font-size:12px;">· 신랑</span></div>
+              <div class="account-num">국민 792002-01-2009886</div>
+            </div>
+            <button class="copy-btn" onclick="copyAccount('792002012009886', '국민은행 정기태')">복사</button>
+          </div>
+          <div class="account-item">
+            <div class="account-info">
+              <div class="account-name">정해승 <span style="color:#a8a098;font-size:12px;">· 아버지</span></div>
+              <div class="account-num">국민 621925-93-107530</div>
+            </div>
+            <button class="copy-btn" onclick="copyAccount('62192593107530', '국민은행 정해승')">복사</button>
+          </div>
+          <div class="account-item">
+            <div class="account-info">
+              <div class="account-name">문명숙 <span style="color:#a8a098;font-size:12px;">· 어머니</span></div>
+              <div class="account-num">농협 225-0365-2151-466</div>
+            </div>
+            <button class="copy-btn" onclick="copyAccount('22503652151466', '농협 문명숙')">복사</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="account-box">
+        <button class="account-toggle" onclick="toggleAccount(this)">신부측 계좌번호</button>
+        <div class="account-list">
+          <div class="account-item">
+            <div class="account-info">
+              <div class="account-name">김수연 <span style="color:#a8a098;font-size:12px;">· 신부</span></div>
+              <div class="account-num">국민 010-9020-4142-318</div>
+            </div>
+            <button class="copy-btn" onclick="copyAccount('01090204142318', '국민은행 김수연')">복사</button>
+          </div>
+          <div class="account-item">
+            <div class="account-info">
+              <div class="account-name">김민범 <span style="color:#a8a098;font-size:12px;">· 아버지</span></div>
+              <div class="account-num">기업 228-008563-02-021</div>
+            </div>
+            <button class="copy-btn" onclick="copyAccount('22800856302021', '기업은행 김민범')">복사</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      함께해 주시는 모든 분들께 감사드립니다.<br />
+      기태 &amp; 수연
+    </footer>
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close">×</button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // RSVP 모달
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('rsvpModal').classList.add('show');
+      }, 800);
+    });
+
+    function closeRsvp() {
+      document.getElementById('rsvpModal').classList.remove('show');
+      tryPlayMusic();
+    }
+
+    // 배경음악
+    const bgm = document.getElementById('bgm');
+    const musicBtn = document.getElementById('musicBtn');
+
+    function tryPlayMusic() {
+      bgm.volume = 0.4;
+      bgm.play().then(() => {
+        musicBtn.classList.add('playing');
+      }).catch(() => {
+        musicBtn.classList.remove('playing');
+      });
+    }
+
+    function toggleMusic() {
+      if (bgm.paused) {
+        bgm.play().then(() => musicBtn.classList.add('playing'));
+      } else {
+        bgm.pause();
+        musicBtn.classList.remove('playing');
+      }
+    }
+
+    window.addEventListener('load', tryPlayMusic);
+
+    // 갤러리
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      const imgPath = item.dataset.img;
+      const img = new Image();
+      img.onload = () => {
+        item.innerHTML = '<img src="' + imgPath + '" alt="" />';
+        item.addEventListener('click', () => openLightbox(imgPath));
+      };
+      img.src = imgPath;
+    });
+
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('show');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('show');
+    }
+
+    // 계좌
+    function toggleAccount(btn) {
+      btn.classList.toggle('open');
+      btn.nextElementSibling.classList.toggle('open');
+    }
+
+    function copyAccount(number, name) {
+      navigator.clipboard.writeText(number).then(() => {
+        showToast(name + ' 복사됨');
+      }).catch(() => {
+        const temp = document.createElement('input');
+        temp.value = number;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        showToast(name + ' 복사됨');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+  </script>
+</body>
+</html>
